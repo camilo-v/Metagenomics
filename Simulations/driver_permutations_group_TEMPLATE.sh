@@ -19,7 +19,7 @@
 #   Please cite the author(s) in any work or product based on this material.
 #
 #   OBJECTIVE:
-#	The purpose of this script is serve as a template for the permutation runs. LSF jobs are dispatched with this
+#	The purpose of this script is to serve as a template for the permutation runs. LSF jobs are dispatched with this
 #	script, which in turns calls the 'permutations.sh' script to execute the mutation & alignment commands.
 #
 #   NOTES:
