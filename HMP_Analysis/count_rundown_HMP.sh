@@ -48,7 +48,7 @@
 #
 # ---------------------------------------------------------------------------------------------------------------------
 
-PROB='2'
+PROB='PROBABILITY_VALUE'
 
 # 	Path to framework (software)
 PROJECT_DIR='/Path/To/Project/software'
