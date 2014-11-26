@@ -31,9 +31,23 @@
 #   USAGE:
 #   Run the program with the "--help" flag to see usage instructions.
 #
+#
+#
 #	AUTHOR:	Camilo Valdes (cvaldes3@med.miami.edu)
 #			Computational Biology and Bioinformatics Group
 #			Center for Computational Science (CCS), University of Miami
+#
+#
+#   COLLABORATORS:
+#
+#           Jennifer Clarke (jclarke3@unl.edu)
+#           Director, Computational Sciences Initiative
+#           Associate Professor Department of Food Science and Technology & Department of Statistics
+#           University of Nebraska-Lincoln
+#
+#           Bertrand Clarke (bclarke3@unl.edu)
+#           Professor and Department Head, Department of Statistics
+#           University of Nebraska-Lincoln
 #
 #
 # ---------------------------------------------------------------------------------------------------------------------
