@@ -59,6 +59,7 @@ Contact [Camilo Valdes](mailto:cvaldes3@miami.edu) for pull requests, bug report
 - [Jennifer Clarke](mailto:jclarke3@unl.edu)
 - [Bertrand Clarke](mailto:bclarke3@unl.edu)
 
+
 ## License
 
 The software in this repository is available under the GNU GENERAL PUBLIC LICENSE, Version 3.  See the LICENSE file for more information.
