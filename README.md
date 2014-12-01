@@ -32,7 +32,7 @@ You will need a reasonably modern computer and operating system that can support
 
 [Samtools](http://www.htslib.org/) is required for parsing the alignments and generating miscellaneous alignment statistics.  See the [Samtools Documentation](http://www.htslib.org/doc/) for instructions on installing and running Samtools.
 
-## R
+### R
 
 The latest version of [R](http://www.r-project.org/) is required for calculating the bacterial p-values, and visualizing the read-hit distribution.  You will also need the following R libraries & packages from [CRAN](http://cran.r-project.org/):
 
