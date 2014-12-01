@@ -17,9 +17,9 @@ The software in this repository is related to the paper titled “**Detecting Ba
 
 The software was developed on OS X (10.9) and covers four (4) programming languages:
 
-- Python
-- Perl
-- R
+- Python (2.7 variant)
+- Perl (perl 5, v.16 or above)
+- R (3.1 or above)
 - Bash Shell
 
 You will need a reasonably modern computer and operating system that can support all four.
@@ -30,7 +30,19 @@ You will need a reasonably modern computer and operating system that can support
 
 ### Samtools
 
-[Samtools](http://www.htslib.org/) is required for parsing the alignments and generating miscellaneous alignment statistics.  See the [Samtools Documentation](http://www.htslib.org/doc/) for instructions on installing and running Samtools. 
+[Samtools](http://www.htslib.org/) is required for parsing the alignments and generating miscellaneous alignment statistics.  See the [Samtools Documentation](http://www.htslib.org/doc/) for instructions on installing and running Samtools.
+
+## R
+
+The latest version of [R](http://www.r-project.org/) is required for calculating the bacterial p-values, and visualizing the read-hit distribution.  You will also need the following R libraries & packages from [CRAN](http://cran.r-project.org/):
+
+- [ggplot2](http://ggplot2.org/)
+- [reshape2](http://cran.r-project.org/web/packages/reshape2/index.html)
+- [plyr](http://cran.r-project.org/web/packages/plyr/index.html)
+- [untb](http://cran.r-project.org/web/packages/untb/index.html)
+- [vegan](http://cran.r-project.org/web/packages/vegan/index.html)
+- [multtest (Bioconductor)](http://www.bioconductor.org/packages/release/bioc/html/multtest.html)
+
 
 
 ## Contact
