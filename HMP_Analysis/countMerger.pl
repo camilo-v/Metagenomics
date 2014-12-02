@@ -1,4 +1,4 @@
-#!/share/opt/perl/5.18.1/bin/perl -w
+#!/usr/bin/perl -w
 
 # ---------------------------------------------------------------------------------------------------------------------
 #
@@ -10,9 +10,9 @@
 #   Please cite the author(s) in any work or product based on this material.
 #
 #   OBJECTIVE:
-#	The purpose of this program is to paste (in parallel) a set of columns from a set of files; it is similar
-#   to the built-in linux 'paste' command, but it pads empty columns to 'square' the output file — something
-#   the 'paste' command does not do.
+#	The purpose of this program is to paste (in parallel) a set of columns from a set of tab-delimited files.  The
+#	purpose of this program is similar to the Unix 'paste' utility.  The difference is that this program pads empty
+#	columns to 'square' the output file — something the 'paste' utility does not do.
 #
 #
 #   NOTES:
@@ -51,14 +51,7 @@ use Benchmark;
 use Cwd;
 use POSIX qw/strftime/;
 
-#############################################################################################################
-#
-#													Main
-#
-#-----------------------------------------------------------------------------------------------------------
-#
-#	Preliminaries
-#
+# ------------------------------------------------------ Main ---------------------------------------------------------
 
 my $bundle = "0.1";
 my $build  = "A0001";
@@ -106,20 +99,14 @@ $| = 1;  # Flush STDOUT
 print( "\n" );
 print( "[" . strftime('%d-%b-%Y %H:%M:%S',localtime()) . "] Starting...\n" );
 
-#-----------------------------------------------------------------------------------------------------------
-#
-#	Output Files with aggregated counts
-#
+# -------------------------------------------------- Output Files -----------------------------------------------------
 
 print( "[" . strftime('%d-%b-%Y %H:%M:%S',localtime()) . "] Creating output files...\n" );
 
 my $fout1 = $outputDir . "/" . $prefix . "_" . $file_type . ".txt";
 unless( open( OUTFILE, ">$fout1" ) ) { print "File $fout1 does not exist"; exit; }
 
-#-----------------------------------------------------------------------------------------------------------
-#
-#	File Loader
-#
+# --------------------------------------------------- File Loader -----------------------------------------------------
 
 print( "[" . strftime('%d-%b-%Y %H:%M:%S',localtime()) . "] Loading file list...\n" );
 
@@ -151,11 +138,6 @@ close(INFILE);
 print( "[" . strftime('%d-%b-%Y %H:%M:%S',localtime()) . "] Number of lines in file list for Q" . $prefix . ":" );
 print( " " . &addCommas($numberOfLines) . "\n" );
 
-# Maps a fileName to its contents (nested array of lines)
-# KEY: File Name (string)
-# VAL: Nested array of lines
-#my %fileContents = ();
-
 # Maps a FileID to the FileName (column number in resulting merged file)
 my %fileToID = ();
 
@@ -177,8 +159,6 @@ for my $fileID ( sort{ $a cmp $b || $a <=> $b } keys %filesToAggregate )
     # Read the file contents
     unless( open( INFILE2, $filePath ) )
     { die( "\n\nUnable to open Input File in loop: $filePath.  Please verify.\n\n" ); }
-
-#    my @fileLineArray = ();
 
     my $numberOfLinesInFile = 1;
 
@@ -217,8 +197,6 @@ for my $fileID ( sort{ $a cmp $b || $a <=> $b } keys %filesToAggregate )
             push( @permutationsArray, $lineArray[ $n ] );
         }
 
-#        push( @fileLineArray, $line );
-
         $numberOfLinesInFile++;
 
         $referencePermutationsCounts{ $sequenceName }{ $fileName } = \@permutationsArray;
@@ -226,11 +204,7 @@ for my $fileID ( sort{ $a cmp $b || $a <=> $b } keys %filesToAggregate )
         $referenceSequenceLength{ $sequenceName } = $sequenceLength;
     }
 
-#    my $numberOfLinesInFile = @fileLineArray;
-
     print( "[" . strftime('%d-%b-%Y %H:%M:%S',localtime()) . "] $fileID) $fileName: " . &addCommas($numberOfLinesInFile) . " lines\n" );
-
-#    $fileContents{ $fileName } = \@fileLineArray;
 
     $fileToID{ $fileID } = $fileName;
 
@@ -330,16 +304,10 @@ $| = 1;
 
 
 
-#-----------------------------------------------------------------------------------------------------------
-#
-#                                               End of Line
-#
-#############################################################################################################
-#
-#	addCommas() Method
-#
+# ----------------------------------------------- Functions & Methods --------------------------------------------------
+
+#	addCommas
 #	Simple method to format a number with commas
-#
 #
 sub addCommas
 {
