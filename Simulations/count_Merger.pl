@@ -1,4 +1,4 @@
-#!/share/opt/perl/5.18.1/bin/perl -w
+#!/usr/bin/perl -w
 
 # ---------------------------------------------------------------------------------------------------------------------
 #
@@ -10,9 +10,9 @@
 #   Please cite the author(s) in any work or product based on this material.
 #
 #   OBJECTIVE:
-#	The purpose of this program is to paste (in parallel) a set of columns from a set of files; it is similar
-#   to the built-in linux 'paste' command, but it pads empty columns to 'square' the output file — something
-#   the 'paste' command does not do.
+#	The purpose of this program is to paste (in parallel) a set of columns from a set of tab-delimited files.  The
+#	purpose of this program is similar to the Unix 'paste' utility.  The difference is that this program pads empty
+#	columns to 'square' the output file — something the 'paste' utility does not do.
 #
 #
 #   NOTES:
@@ -20,8 +20,7 @@
 #
 #   DEPENDENCIES:
 #
-#       • None. Uses standard classes.
-#
+#       • None. Uses standard Perl modules.
 #
 #
 #	AUTHOR:	Camilo Valdes (cvaldes3@med.miami.edu)
