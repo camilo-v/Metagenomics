@@ -20,7 +20,6 @@
 #       • multtest.
 #
 #
-#
 #	AUTHOR:	Camilo Valdes (cvaldes3@med.miami.edu)
 #			Computational Biology and Bioinformatics Group
 #			Center for Computational Science (CCS), University of Miami
@@ -49,18 +48,17 @@ nperm<-200
 totsampcnt<-150000*2
 rlength<-100
 
-# read in number of reads that align when no mutations are done
-# we don't actually need to do this nperm times, since the results should not vary if
-# no mutations are being done
-
 print( paste( "[", format(Sys.time(), "%m/%d/%y %H:%M:%S"),"] ", sep="") )
 print( paste( "[", format(Sys.time(), "%m/%d/%y %H:%M:%S"),"] Starting... ", sep="") )
 
-######################################################################################################
+# ------------------------------------------------- Base Counts -------------------------------------------------------
 #
 #	Base "0" Counts
-#	this does not change with the choice of q, so it is possible to compute once, save
-#	in a workspace, and then simply load
+# 	We read in the number of reads that align when no mutations are done.  Note that we do not actually need to do
+#	this "nperm" times, since the results should not vary if when no mutations are being done.  The DNA aligner should
+#	be deterministic — luckily for us, Bowtie2 is.
+#	The Base counts for each group do not change with the choice of q, so it is possible to compute once, save in a
+#	workspace, and then load it back into memory.
 #
 
 datall<-read.csv('/Path/To/metagenomic_simulations/groups/group_GRP/analysis/counts/0/0_counts_clean.txt', sep="\t", header=TRUE, row.names=1, allowEscapes=T, colClasses=c('character',rep('numeric',nperm+1)))
@@ -84,7 +82,7 @@ save.image('0count.RData')
 # adjust hypergeometric based p-values by BH, resort to match original list
 library(multtest)
 
-######################################################################################################
+# ------------------------------------------------ Mutated Counts ------------------------------------------------------
 #
 #	Q Counts
 #	(Q) is some value from 2..30
@@ -99,14 +97,13 @@ print( paste( "[", format(Sys.time(), "%m/%d/%y %H:%M:%S"),"] Q Counts", sep="")
 print( filename )
 
 
-######################################################################################################
+# ----------------------------------------- Multiple Testing Correction -----------------------------------------------
 #
 #	Apply single-step WY correction as described in Meinshausen et al. (2011)
 #	Remember by default sorting is done ascending
 #
 
 # convert raw permutation count data to adjusted count data using read and genome lengths
-
 pperm<-apply(datap[,2:(nperm+1)],2,function(x) (x*rlength)/data[,1])
 
 quant<-seq(0.90,1,0.01)
@@ -115,7 +112,6 @@ plot(quant,apply(tmp,1,mean))
 
 # Adjust permutation based p-values by single-step WY, note rank matrix is nperm*nref
 # note if even one reference file is 'weird' this goes very badly wrong
-# maxpp<-apply(pperm,2,max)
 
 valueForQuantile = 0.95
 maxpp<-apply(pperm,2,function(x) quantile(x,valueForQuantile))  # The Non-Permuted Has to beat the MAX!
@@ -128,11 +124,9 @@ ppvalWF<-apply(rank,2,function(x) (which(x==(nperm+1))-1)/(nperm+1))
 
 outfile2<-paste('perm',qval,'.permWY1-', valueForQuantile, '.txt',sep="")
 
+# ----------------------------------------------------- Warning -------------------------------------------------------
 #
-#	NO COMMA SEPARATED OUTPUT FILES, THE STRAIN NAMES HAVE COMMAS AND ANNIHILATE ANY PARSING EFFORTS.
+#	No comma-separated output files.  Tab-delimited only.  The strains names have commas and cause all kinds of
+#	problems.
 #
-
-#write.csv(cbind(ppvaladj$rawp,ppvaladj$adjp,ppvalWF,datap), file=outfile2)
-#write.csv(cbind(ppvalWF,datap), file=outfile2)
-
 write.table(cbind(ppvalWF,datap), file=outfile2, sep="\t")
