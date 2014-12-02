@@ -10,7 +10,7 @@
 #   Please cite the author(s) in any work or product based on this material.
 #
 #   OBJECTIVE:
-#	The purpose of this script is to create the counting scripts from that will get submitted to the Pegasus2 cluster
+#	The purpose of this script is to create the counting scripts that will get submitted to the Pegasus2 cluster
 #	(via LSF).  Each script is created from the "count_rundown_TEMPLATE.sh" blueprint script.  The scheme here is to copy
 #	the template script 'N' number of times and replace markers in the template with group specific variables and
 #	parameters — with 'N' being the number of of subgroups from the conditional population plus the number of mutation
