@@ -47,7 +47,7 @@ The latest version of [R](http://www.r-project.org/) is required for calculating
 
 ## Contact
 
-Contact [Camilo Valdes](mailto:cvaldes3@miami.edu) for pull requests, bug reports, good jokes and coffee recipes. :smiley:
+Contact [Camilo Valdes](mailto:cvaldes3@miami.edu) for pull requests, bug reports, good jokes and coffee recipes.
 
 ### Maintainers
 
