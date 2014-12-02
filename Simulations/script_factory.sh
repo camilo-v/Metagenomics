@@ -15,17 +15,11 @@
 #	job is submitted to its own computational node, and executes independetly from the other group jobs.
 #
 #   NOTES:
-#   Please see the dependencies section below for the required libraries (if any).
+#   Please see the dependencies section below for the required.
 #
 #   DEPENDENCIES:
 #
-#       • None. Uses standard python foundation classes.
-#
-#   The above libraries & modules are required. You can check the modules currently installed in your
-#   system by running: python -c "help('modules')"
-#
-#   USAGE:
-#   Run the program with the "--help" flag to see usage instructions.
+#       • None.
 #
 #
 #
@@ -93,4 +87,7 @@ for GROUP in "${GROUPS_TO_PROCESS[@]}"
 
 
 echo ""
+echo "[" `date '+%m/%d/%y %H:%M:%S'` "]"
 echo "[" `date '+%m/%d/%y %H:%M:%S'` "] Done."
+echo "[" `date '+%m/%d/%y %H:%M:%S'` "]"
+echo ""
