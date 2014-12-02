@@ -18,17 +18,11 @@
 #
 #
 #   NOTES:
-#   Please see the dependencies section below for the required libraries (if any).
+#   Please see the dependencies section below for the required modules.
 #
 #   DEPENDENCIES:
 #
-#       • None. Uses standard python foundation classes.
-#
-#   The above libraries & modules are required. You can check the modules currently installed in your
-#   system by running: python -c "help('modules')"
-#
-#   USAGE:
-#   Run the program with the "--help" flag to see usage instructions.
+#       • None.
 #
 #
 #
