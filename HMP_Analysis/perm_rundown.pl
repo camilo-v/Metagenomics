@@ -2,9 +2,9 @@
 
 # ---------------------------------------------------------------------------------------------------------------------
 #
-#                                   Center for Computational Science
-#										http://www.ccs.miami.edu/
-#                             			  University of Miami
+#                                   		Center for Computational Science
+#												http://www.ccs.miami.edu/
+#                             			  			University of Miami
 #
 #   This software is a "University of Miami Work" under the terms of the United States Copyright Act.
 #   Please cite the author(s) in any work or product based on this material.
@@ -58,6 +58,9 @@ use File::Slurp qw(read_dir);
 use Bio::Perl;
 use Bio::Seq;
 use Bio::SeqIO;
+
+# Custom Libraries
+use lib "/nethome/cvaldes/apps/perl_modules/lib/site_perl/5.18.1";
 use Memory::Usage;
 
 # ------------------------------------------------------ Main ---------------------------------------------------------
@@ -97,7 +100,7 @@ if( !defined( $outputDir ) )
 
 $| = 1;  # Flush STDOUT
 
-# ------------------------------------------------ Output Files ---------------------------------------------------------
+# ------------------------------------------------- Output Files ------------------------------------------------------
 
 my $fout1 = $outputDir . "/" . $prefix . "_counts-" . $low . "-" . $high . ".txt";
 unless( open( OUTFILE, ">$fout1" ) ) { print "File $fout1 does not exist"; exit; }
@@ -107,7 +110,8 @@ if( $read_hits ) {
     unless( open( OUTFILE2, ">$fout2" ) ) { print "File $fout2 does not exist"; exit; }
 }
 
-# ------------------------------------------ Reference Name File Loader --------------------------------------------------
+
+# ------------------------------------------- Reference Name File Loader ----------------------------------------------
 
 print( BOLD, GREEN, "\n--\n", RESET );
 print( BOLD, "Loading file(s) ... ", RESET );
@@ -123,9 +127,10 @@ while( my $line = <INFILE> ) {
 
     chomp($line);
 	$line   =~ s/\r//g;
-    my @lineArray = split(/ /,$line);
+    my @lineArray = split(/\t/,$line);
 
-	my $aRefName = $lineArray[ 0 ];	# Modified for MetaSim and Bowtie2 Indexing
+    my @name = split(/ /,$lineArray[ 0 ]);
+    my $aRefName = $name[ 0 ];
 
     $referenceNames{ $aRefName } = $lineArray[ 0 ];
 
@@ -138,7 +143,8 @@ print( CYAN, "\n Number of Reference Names in input file: ", RESET );
 print( " " . &addCommas($numberOfLines) . "\n" );
 
 
-# ---------------------------------------------- Permutation Processor ---------------------------------------------------
+
+# ---------------------------------------------- Permutation Processor ------------------------------------------------
 
 print( BOLD, GREEN, "\n--\n", RESET );
 print( BOLD, "Looking at permutations in dir: " . $permutationsDir . "", RESET );
@@ -152,7 +158,9 @@ my %permutationColumns = ();
 
 my $root = $permutationsDir;
 
-my @alignmentFiles = (  "alignments.sorted.bam" );
+# Generic Case
+my @alignmentFiles = (  "alignments_1_A.sorted.bam", "alignments_1_B_1.sorted.bam", "alignments_1_B_2.sorted.bam",
+                        "alignments_2_A.sorted.bam", "alignments_2_B_1.sorted.bam", "alignments_2_B_2.sorted.bam", );
 
 # Hash to keep track of how many genomes a read maps to
 # KEY: Read ID
@@ -161,8 +169,7 @@ my %readHitDistribution = ();
 
 for my $dir ( grep { -d "$root/$_" } read_dir( $root ) ) {
 
-	# Trying to load all the reads for all the permutations into memory is not optimal.  So we split the
-	# permutation directories into batches — 'low' and 'high' demarcate the permutation interval to use.
+    # Reads are too much, need to split directories in batches (low and high demarcate the interval to use)
     my $dirNumber = $dir;
     $dirNumber =~ s/perm_//g;
 
@@ -233,8 +240,6 @@ for my $dir ( grep { -d "$root/$_" } read_dir( $root ) ) {
 
 }
 
-
-# --------------------------------------------- Fractional Counts ---------------------------------------------
 #
 #   Maps a read to the number (int) of genomes it is mapped to within a given permutation.
 #
@@ -280,11 +285,9 @@ if( $read_hits ) {
     close(OUTFILE2);
 }
 
-
-
-# ------------------------------------------- Sequence Lengths -------------------------------------------
+# ------------------------------------------------- Sequence Loader ---------------------------------------------------
 #
-#	Reference Sequence File Loader (used for sequence lengths in reporting files)
+#	Reference Sequence Loader (used for sequence lengths)
 #
 
 print( BOLD, GREEN, "\n--\n", RESET );
@@ -310,10 +313,9 @@ print( CYAN, "\n Sequences matched with Reference List: ", RESET );
 print( " " . &addCommas($sizeOfGenSeq) . "(" . &addCommas($refsMatched) . ")\n" );
 
 
-
-# ------------------------------------------- Output File Reports -------------------------------------------
+# ---------------------------------------------------- Reporting ------------------------------------------------------
 #
-#	Write the reference count data structures to the output files
+#   Write the reference count data structures to the output files
 #
 
 print( BOLD, GREEN, "\n--\n", RESET );
@@ -387,12 +389,11 @@ close(OUTFILE);
 
 $| = 1; # Re-flush STDOUT
 
-# ---------------------------------------------- Functions & Methods -------------------------------------------------
 
+# ---------------------------------------------- Functions & Methods --------------------------------------------------
 
-#	addCommas()
+#	addCommas
 #	Simple method to format a number with commas
-#
 #
 sub addCommas
 {
