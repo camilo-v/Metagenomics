@@ -59,6 +59,9 @@ mkdir -p $AVERAGE_HIT_DIR
 
 
 echo ""
+echo "[" `date '+%m/%d/%y %H:%M:%S'` "]"
+echo "[" `date '+%m/%d/%y %H:%M:%S'` "] Starting..."
+echo "[" `date '+%m/%d/%y %H:%M:%S'` "]"
 
 for Q in 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30
 {
@@ -67,10 +70,7 @@ for Q in 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30
 
 	Q_BASE_DIR=$COUNT_BASE_DIR'/'$Q
 
-	#------------------------------------------------------------------------------------------------
-	#
-	#	Read-Hit Distribution
-	#
+	# ----------------------------------------------- Read Hit Distribution ----------------------------------------------
 
 	echo "[" `date '+%m/%d/%y %H:%M:%S'` "] Q"$Q" — Processing Hit Distributions..."
 
@@ -101,14 +101,14 @@ for Q in 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30
 		$APP_PATH/countMerger.pl -i $BATCH_OUTPUT_FILE_WITH_MERGED_DISTS -o $Q_BASE_DIR -p $Q --omit --type $TYPE
 	}
 
-	# A-B Merge
+
+	# ---------------------------------------------------- A & B Merge ---------------------------------------------------
 
 	echo "[" `date '+%m/%d/%y %H:%M:%S'` "] A-B Merge..."
 
-	#-----------------------------------------------------------------
-	#
-	#	A
-	#
+
+	# ---------------------------------------------------- A ---------------------------------------------------
+
 	OUTPUT_FILE_FOR_LAST_MERGE_A=$Q_BASE_DIR'/'$Q'-final_merge_file_list_for_hit_distribution_A.txt'
 
 	rm -f $OUTPUT_FILE_FOR_LAST_MERGE_A
@@ -121,10 +121,9 @@ for Q in 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30
 
 	$APP_PATH/countMerger.pl -i $OUTPUT_FILE_FOR_LAST_MERGE_A -o $Q_BASE_DIR -p $Q --omit --type $TYPE_FOR_LAST_MERGE_A --header
 
-	#-----------------------------------------------------------------
-	#
-	#	B
-	#
+
+	# ---------------------------------------------------- B ---------------------------------------------------
+
 	OUTPUT_FILE_FOR_LAST_MERGE_B=$Q_BASE_DIR'/'$Q'-final_merge_file_list_for_hit_distribution_B.txt'
 
 	rm -f $OUTPUT_FILE_FOR_LAST_MERGE_B
@@ -137,10 +136,9 @@ for Q in 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30
 
 	$APP_PATH/countMerger.pl -i $OUTPUT_FILE_FOR_LAST_MERGE_B -o $Q_BASE_DIR -p $Q --omit --type $TYPE_FOR_LAST_MERGE_B --header
 
-	#-----------------------------------------------------------------
-	#
-	#	FINAL
-	#
+
+
+	# ---------------------------------------------------- Final Merge ---------------------------------------------------
 
 	echo "[" `date '+%m/%d/%y %H:%M:%S'` "] Final Merge..."
 
@@ -157,9 +155,9 @@ for Q in 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30
 	$APP_PATH/countMerger.pl -i $OUTPUT_FILE_FOR_LAST_MERGE_FINAL -o $Q_BASE_DIR -p $Q --omit --type $TYPE_FOR_LAST_MERGE_FINAL --header
 
 
-	#-----------------------------------------------------------------
+
+	# ----------------------------------------------------- Averages -----------------------------------------------------
 	#
-	#	Averages
 	#	We are only interested in the mean number of hits for each read, which are in the last column
 	#
 
@@ -177,7 +175,8 @@ for Q in 2 4 6 8 10 12 14 16 18 20 22 24 26 28 30
 
 }
 
-echo ""
-echo ""
-echo "[" `date '+%m/%d/%y %H:%M:%S'` "] Fin."
+echo "[" `date '+%m/%d/%y %H:%M:%S'` "]"
+echo "[" `date '+%m/%d/%y %H:%M:%S'` "]"
+echo "[" `date '+%m/%d/%y %H:%M:%S'` "] Done."
+echo "[" `date '+%m/%d/%y %H:%M:%S'` "]"
 echo ""
