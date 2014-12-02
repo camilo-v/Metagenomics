@@ -10,22 +10,27 @@
 #   Please cite the author(s) in any work or product based on this material.
 #
 #   OBJECTIVE:
-#	The purpose of this script is to call the mutation script and to drive the alignment of the metagenomic sample to
-#	the reference database.
+#	The purpose of this script is to create a single permutation of the mutated NGS reads (the sample).  This script is
+#	called N-number of times by "driver_permutations_group_TEMPLATE.sh", where "N" is the number of permutations desired.
+#	This script drives the bulk of the work: it aligns the NGS reads at different mutation rates: from '0' (no mutations)
+#	all the way to '.30' in intervals of '0.02'.
+#	The main task of this script is to mutate the reads at a given mutation rate ($PROB) by calling the perl script
+#	"sequencePermuter.pl"; it then aligns the output (the newly mutated NGS sample) to the reference conditional
+#	population database of strains using bowtie2.
+#	Samtools is used in the end to sort and index the alignments, as well as to obtain basic stats ('flagstat').
+
 #
 #   NOTES:
-#   Please see the dependencies section below for the required libraries (if any).
+#   The script uses the bowtie2 DNA aligner for the alignment step.  A bowtie2 index must have been previously created
+#	with the necessary conditional population stratins. Also, see the dependencies section below for the required
+#	binaries.
+#
 #
 #   DEPENDENCIES:
 #
-#       • None. Uses standard python foundation classes.
-#
-#   The above libraries & modules are required. You can check the modules currently installed in your
-#   system by running: python -c "help('modules')"
-#
-#   USAGE:
-#   Run the program with the "--help" flag to see usage instructions.
-#
+#       • sequencePermuter.pl — a Perl script that performs the point mutattions at the requested rate.
+#		• bowtie2 — a tool for aligning sequencing reads to reference sequences.
+#		• samtools — a suite of programs for interacting with high-throughput sequencing data
 #
 #
 #	AUTHOR:	Camilo Valdes (cvaldes3@med.miami.edu)
@@ -79,9 +84,6 @@ fi
 
 # ---------------------------------------------------- Alignment ------------------------------------------------------
 
-#	SAM Header Location
-# HEADER='/projects/bioinf/ref/annotations/img/4/bacteria/metadata/header.sam'
-
 # 	Reads
 READS_1="reads1File"
 READS_2="reads2File"
@@ -129,7 +131,7 @@ $BOWTIE2_APP_PATH/bowtie2 --local -D 20 -R 3 -N 0 -L $SEED_LENGTH -i $SEED_INTER
 SAMTOOLS_APP_PATH='/Path/To/SamTools/Installation/samtools/0.1.19'
 
 # Convert the Bowtie SAM output to standard BAM
-/nethome/bioinfo/tools/samtools/0.1.19/samtools view -b -S -o $OUTDIR/$FILENAME.bam $OUTDIR/$FILENAME.sam
+$SAMTOOLS_APP_PATH/samtools view -b -S -o $OUTDIR/$FILENAME.bam $OUTDIR/$FILENAME.sam
 
 FLAGSTATS_FILE=$OUTDIR'/flagStats.txt'
 REF_COUNTS_FILE=$OUTDIR'/reference_Counts.txt'
