@@ -19,8 +19,9 @@
 #   Please cite the author(s) in any work or product based on this material.
 #
 #   OBJECTIVE:
-#	The purpose of this script is to serve as a template of the fractional-counts drivers for each of the group jobs.
-#	LSF jobs use this script to run the counting jobs.
+#	The purpose of this script is to serve as a template for the fractional-counts factory script.  The factory script
+#	will create a stand alone scripts that will execute the counting script, "perm_rundown_simulations.pl" for each of
+#	the subgroup jobs.  Each of these scripts is a submission job for LSF in the Pegasus2 cluster.
 #
 #
 #   NOTES:
@@ -28,14 +29,7 @@
 #
 #   DEPENDENCIES:
 #
-#       • None. Uses standard python foundation classes.
-#
-#   The above libraries & modules are required. You can check the modules currently installed in your
-#   system by running: python -c "help('modules')"
-#
-#   USAGE:
-#   Run the program with the "--help" flag to see usage instructions.
-#
+#       • None. Uses standard modules.
 #
 #
 #	AUTHOR:	Camilo Valdes (cvaldes3@med.miami.edu)
