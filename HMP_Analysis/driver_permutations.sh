@@ -53,10 +53,10 @@
 PROB=2
 
 # Location of the driving scripts
-RUN_DIR='/scratch/cvaldes/jennifer/metagenomics/permutations/mid_vaginal/drivers'
+RUN_DIR='/Path/To/permutations/mid_vaginal/drivers'
 
 # Define the output directory
-OUTPUT_DIR='/scratch/cvaldes/jennifer/metagenomics/permutations/mid_vaginal/results/reads_permuted@'$PROB
+OUTPUT_DIR='/Path/To/permutations/mid_vaginal/results/reads_permuted@'$PROB
 
 # We'll create our output directory
 mkdir -p $OUTPUT_DIR
@@ -73,10 +73,7 @@ for ((i = 207; i <= 350; i++))
 	$RUN_DIR/permutations.sh $INSTANCE $PROB
 }
 
-#==============================================================================================================
-#
-#	Summaries
-#
+# ----------------------------------------------------- Summaries -----------------------------------------------------
 
 SUM_FILE="$OUTPUT_DIR/permutation_summary@$PROB.txt"
 
