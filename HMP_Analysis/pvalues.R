@@ -1,8 +1,10 @@
+
 # ---------------------------------------------------------------------------------------------------------------------
 #
-#                                   Center for Computational Science
-#										http://www.ccs.miami.edu/
-#                             			  University of Miami
+#                                   		Center for Computational Science
+#												http://www.ccs.miami.edu/
+#                             			  			University of Miami
+#
 #
 #   This software is a "University of Miami Work" under the terms of the United States Copyright Act.
 #   Please cite the author(s) in any work or product based on this material.
@@ -15,8 +17,7 @@
 #
 #   DEPENDENCIES:
 #
-#       • multtest.
-#
+#       • multtest
 #
 #
 #	AUTHOR:	Camilo Valdes (cvaldes3@med.miami.edu)
@@ -47,16 +48,14 @@ nperm<-350
 totsampcnt<-495256*2
 rlength<-100
 
-# read in number of reads that align when no mutations are done
-# we don't actually need to do this nperm times, since the results should not vary if
-# no mutations are being done
-
-
-######################################################################################################
+# ------------------------------------------------- Base Counts -------------------------------------------------------
 #
 #	Base "0" Counts
-#	this does not change with the choice of q, so it is possible to compute once, save
-#	in a workspace, and then simply load
+# 	We read in the number of reads that align when no mutations are done.  Note that we do not actually need to do
+#	this "nperm" times, since the results should not vary if when no mutations are being done.  The DNA aligner should
+#	be deterministic — luckily for us, Bowtie2 is.
+#	The Base counts for each group do not change with the choice of q, so it is possible to compute once, save in a
+#	workspace, and then load it back into memory.
 #
 
 datall<-read.csv('/Path/To/metagenomics/permutations/mid_vaginal/analysis/counts/0/0_counts.txt', sep="\t", header=TRUE, row.names=1, allowEscapes=T, colClasses=c('character',rep('numeric',nperm+1)))
@@ -74,7 +73,7 @@ save.image('0count.RData')
 # adjust hypergeometric based p-values by BH, resort to match original list
 library(multtest)
 
-######################################################################################################
+# ------------------------------------------------ Mutated Counts ------------------------------------------------------
 #
 #	Q Counts
 #	(Q) is some value from 2..30
@@ -86,14 +85,13 @@ filename<-paste('/Path/To/permutations/mid_vaginal/analysis/counts/',qval,'/',qv
 datap<-read.csv(file=filename, sep="\t", header=TRUE, row.names=1, allowEscapes=T, colClasses=c('character',rep('numeric',nperm+1)))
 
 
-######################################################################################################
+# ----------------------------------------- Multiple Testing Correction -----------------------------------------------
 #
 #	Apply single-step WY correction as described in Meinshausen et al. (2011)
 #	Remember by default sorting is done ascending
 #
 
 # convert raw permutation count data to adjusted count data using read and genome lengths
-
 pperm<-apply(datap[,2:(nperm+1)],2,function(x) (x*rlength)/data[,1])
 
 # Adjust permutation based p-values by single-step WY, note rank matrix is nperm*nref
@@ -108,11 +106,10 @@ ppvalWF<-apply(rank,2,function(x) (which(x==(nperm+1))-1)/(nperm+1))
 
 outfile2<-paste('perm',qval,'.permWY1.csv',sep="")
 
-#
-#	NO COMMA SEPARATED OUTPUT FILES, THE STRAIN NAMES HAVE COMMAS AND ANNIHILATE ANY PARSING EFFORTS.
-#
 
-#write.csv(cbind(ppvaladj$rawp,ppvaladj$adjp,ppvalWF,datap), file=outfile2)
-#write.csv(cbind(ppvalWF,datap), file=outfile2)
-
+# ----------------------------------------------------- Warning -------------------------------------------------------
+#
+#	No comma-separated output files.  Tab-delimited only.  The strains names have commas and cause all kinds of
+#	problems.
+#
 write.table(cbind(ppvalWF,datap), file=outfile2, sep="\t")
