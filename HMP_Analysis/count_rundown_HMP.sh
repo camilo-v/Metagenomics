@@ -10,15 +10,20 @@
 
 # ---------------------------------------------------------------------------------------------------------------------
 #
-#                                   Center for Computational Science
-#										http://www.ccs.miami.edu/
-#                             			  University of Miami
+#                                   		Center for Computational Science
+#												http://www.ccs.miami.edu/
+#                             			  			University of Miami
 #
 #   This software is a "University of Miami Work" under the terms of the United States Copyright Act.
 #   Please cite the author(s) in any work or product based on this material.
 #
 #   OBJECTIVE:
-#	The purpose of this program is to drive the fractional counts of the HMP data.
+#	The purpose of this program is to obtain the fractional counts for the HMP dataset.  This script calls the
+#	"perm_rundown.pl" Perl script that actually obtains the counts.  The 'low' and 'high' parameters in the Perl script
+#	demarcate the lower and upper bounds to slice the permutation directories by. Due to the size of the alignment
+#	files, processing all the permutations at once is not feassible, so they are split into batches that can then
+#	be easily processed.  The boundaries to split by, are identified by 'low' and 'high' — they are interval markers.
+#
 #
 #   NOTES:
 #   Please see the dependencies section below for the required libraries (if any).
