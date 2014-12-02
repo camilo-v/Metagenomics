@@ -9,8 +9,14 @@
 #   Please cite the author(s) in any work or product based on this material.
 #
 #   OBJECTIVE:
-#	The purpose of this program is to assign a set of abundances to a set of Bacterial Strains.  Each set of Strains is
-#	contained in a Group which was randomly selected from a Conditional Population of Strains.
+#	The purpose of this program is to assign a set of abundance values to a list of bacterial strains.  The list of
+#	strains is a subgroup which was randomly selected from a larger list of bacterial strains known as the
+#	"Conditional Population".  The size of the conditional population is 60, and each subgroup has size 60 and should
+#	not contain any strains present in the other groups.
+#
+#	USAGE:
+#	The input file 'fileToProcess' is a text-file with the name of the strains.  It has one column per strain and the
+#	biological classification (Genus, Species, etc.) is separated with spaces.
 #
 #   NOTES:
 #   Please see the dependencies section below for the required libraries (if any).
