@@ -11,9 +11,12 @@
 #   Please cite the author(s) in any work or product based on this material.
 #
 #   OBJECTIVE:
-#	The purpose of this program is to create a properly formatted MetaSim profile using GI accessions.  Because of the
-#   disparity in naming conventions, straight Strain names are not useful as their names vary a lot.  It is better to
-#   use GI accessions for the profiles as using these removes any ambiguity as to what sequence is in the database.
+#	The purpose of this program is to create a properly formatted MetaSim profile using GI accessions rather than strain
+#   names.  Because of the disparity in naming conventions, and the potential for name space collisions, straight strain
+#   names are not useful (and potentially problematic) as their names vary too much — that the names of the strains contain
+#   many characters that create lots of problems and edge cases for a regular expression.  It is easier, and more accurate,
+#   to simply use GI accession numbers for the MetaSim profiles — using these removes any ambiguity as to what sequence
+#   is in the database.
 #
 #   NOTES:
 #   Please see the dependencies section below for the required libraries (if any).
@@ -22,8 +25,9 @@
 #
 #       • None. Uses standard python foundation classes.
 #
-#   The above libraries & modules are required. You can check the modules currently installed in your
+#   The above libraries & modules (if any) are required. You can check the modules currently installed in your
 #   system by running: python -c "help('modules')"
+#
 #
 #   USAGE:
 #   Run the program with the "--help" flag to see usage instructions.
