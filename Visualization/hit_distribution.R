@@ -68,6 +68,9 @@ yAxis_upper = 2
 
 averageCounts = read.csv( "merged_hits.txt", sep="\t", header=TRUE )
 
+
+# ----------------------------------------------------- GGPlot --------------------------------------------------------
+
 averageCounts_melted <- melt( averageCounts )
 
 ggplot(averageCounts_melted, aes(x=variable, y=value, fill=variable )) + geom_boxplot() + xlab("Mutation Rate Q") +
