@@ -15,8 +15,8 @@
 #	not contain any strains present in the other groups.
 #
 #	USAGE:
-#	The input file 'fileToProcess' is a text-file with the name of the strains.  It has one column per strain and the
-#	biological classification (Genus, Species, etc.) is separated with spaces.
+#	The input file 'fileToProcess' is a text-file with the name of the strains.  It has one row per strain with one column,
+#	and the biological classification (Genus, Species, etc.) is separated with spaces.
 #
 #   NOTES:
 #   Please see the dependencies section below for the required libraries (if any).
