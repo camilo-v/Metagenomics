@@ -1,4 +1,4 @@
-#!/share/opt/perl/5.18.1/bin/perl -w
+#!/usr/bin/perl -w
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -52,14 +52,7 @@ use Benchmark;
 use Cwd;
 use List::Util ();
 
-#############################################################################################################
-#
-#													Main
-#
-#-----------------------------------------------------------------------------------------------------------
-#
-#	Preliminaries
-#
+# ------------------------------------------------------ Main ---------------------------------------------------------
 
 my $file;               # Input File with P-values
 my $outputDir;			# Output Directory
@@ -93,18 +86,13 @@ if( defined( $delimiter ) ) {
 
 $| = 1;  # Flush STDOUT
 
-#-----------------------------------------------------------------------------------------------------------
-#
-#	Output Files
-#
+# -------------------------------------------------- Output Files -----------------------------------------------------
 
 my $fout1 = $outputDir . "/" . "pvals-composite.txt";
 unless( open( OUTFILE, ">$fout1" ) ) { print "File $fout1 does not exist"; exit; }
 
-#-----------------------------------------------------------------------------------------------------------
-#
-#	File Loader
-#
+
+# --------------------------------------------------- File Loader -----------------------------------------------------
 
 print( BOLD, GREEN, "\n--\n", RESET );
 print( BOLD, "Loading file(s) ... ", RESET );
@@ -135,9 +123,6 @@ while( my $line = <INFILE> )
     my $pval   		= $lineArray[ $columnToUse ];
 
     $strain_line =~ s/"//g;
-
-    #print( "\n $strain_line" );
-    #print( "\t$pval" );
 
     my @strainLineArray = split(/ /,$strain_line);
 
@@ -183,15 +168,7 @@ for my $strain ( sort{ $a cmp $b || $a <=> $b } keys %pvals )
     print( GREEN, " $numOfPvals ($sum)", RESET );
     print( MAGENTA, " $avgPval", RESET );
 
-    # Print out the average p-value
-#    print OUTFILE ( "\n$strain\t$avgPval" );
-
-    # Print out the MIN p-value
     print OUTFILE ( "\n$strain\t$minPval" );
-
-    # Print out the MAX p-value
-#    print OUTFILE ( "\n$strain\t$minPval" );
-
 }
 
 close(OUTFILE);
@@ -203,16 +180,11 @@ $| = 1;
 
 
 
-#-----------------------------------------------------------------------------------------------------------
-#
-#                                               End of Line
-#
-#############################################################################################################
-#
-#	addCommas() Method
-#
+# ----------------------------------------------- Functions & Methods -------------------------------------------------
+
+
+#	addCommas
 #	Simple method to format a number with commas
-#
 #
 sub addCommas
 {
